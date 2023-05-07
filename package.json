@@ -1,6 +1,6 @@
 {
   "name": "@ng2react/support",
-  "version": "1.0.0-rc",
+  "version": "1.0.0-rc.0",
   "description": "Support functions for mixing AngularJS and React Components",
   "repository": {
     "type": "git",
@@ -29,8 +29,7 @@
   },
   "author": "Max Bilbow",
   "license": "The Unlicense",
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "angular": "1",
     "lodash": "x",
