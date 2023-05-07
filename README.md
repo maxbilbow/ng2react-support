@@ -12,6 +12,51 @@ npm install --save @ng2react/support
 
 ## Usage
 
-```javascript
+### Convert your AngularJS component or directive to React
 
+You may do this manually or with the help of the [ng2react vscode extension](https://marketplace.visualstudio.com/items?itemName=maxbilbow.ng2react-vscode)
+
+```jsx
+// React Component
+import React, { useState } from 'react';
+import { useService, NgTranslate } from '@ng2react/support';
+
+const MyReactComponent = ({ title, myController }) => {
+  const myService = useService('myService');
+  const [state, setState] = useState(myService.getState());
+  return (
+    <>
+      <h1>{title}</h1>
+      <p>{state}</p>
+      <p>
+        <NgTranslate
+          id={'TRANLATED_TEXT_ID'}
+          substitutions={myController.getValue()}
+        />
+      </p>
+    </>
+  );
+};
+```
+
+### Wrap your React component
+
+```js
+// AngularJS Component
+import * as angular from 'angular';
+import { angularize } from '@ng2react/support';
+import { MyReactComponent } from './MyReactComponent.jsx';
+
+const myApp = angular.module('myApp', []);
+angularize(MyReactElement, {
+  module: myApp,
+  name: 'myAngularComponent',
+  bindings: {
+    title: '@',
+  },
+  require: {
+    myController: '^myController',
+  },
+  replace: true,
+});
 ```
