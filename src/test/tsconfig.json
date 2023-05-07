@@ -1,0 +1,12 @@
+{
+  "extends": ["../../generic-tsconfig.json"],
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true,
+    "jsx": "react"
+  },
+  "include": ["**/*.ts", "helpers/*.cjs"],
+  "references": [
+    {"path": "../lib"}
+  ]
+}
