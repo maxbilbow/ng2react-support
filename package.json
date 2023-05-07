@@ -29,7 +29,6 @@
   },
   "author": "Max Bilbow",
   "license": "The Unlicense",
-  "dependencies": {},
   "peerDependencies": {
     "angular": "1",
     "lodash": "x",
@@ -56,11 +55,12 @@
     "@types/lodash": "^4.14.194",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
-    "@typescript-eslint/parser": "5",
     "@typescript-eslint/eslint-plugin": "5",
+    "@typescript-eslint/parser": "5",
     "eslint": "^8.34.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
+    "prettier": "^2.8.8",
     "rimraf": "^4.4.0",
     "ts-jest": "^29.1.0",
     "typescript": "5"

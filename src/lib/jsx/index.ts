@@ -1,2 +1,1 @@
-
-export {default as NgTranslate} from "./NgTranslate";
+export { default as NgTranslate } from './NgTranslate';

@@ -6,7 +6,5 @@
     "jsx": "react"
   },
   "include": ["**/*.ts", "helpers/*.cjs"],
-  "references": [
-    {"path": "../lib"}
-  ]
+  "references": [{ "path": "../lib" }]
 }
