@@ -29,10 +29,7 @@ const MyReactComponent = ({ title, myController }) => {
       <h1>{title}</h1>
       <p>{state}</p>
       <p>
-        <NgTranslate
-          id={'TRANLATED_TEXT_ID'}
-          substitutions={myController.getValue()}
-        />
+        <NgTranslate id={'TRANLATED_TEXT_ID'} substitutions={myController.getValue()} />
       </p>
     </>
   );

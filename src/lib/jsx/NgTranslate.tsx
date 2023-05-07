@@ -12,10 +12,7 @@ type Props = {
  * @returns
  */
 const NgTranslate = ({ id, substitutions }: Props) => {
-  const $translate = useMemo(
-    () => getAngularService<translate.ITranslateService>('$translate'),
-    []
-  );
+  const $translate = useMemo(() => getAngularService<translate.ITranslateService>('$translate'), []);
 
   return <>{$translate.instant(id, substitutions)}</>;
 };

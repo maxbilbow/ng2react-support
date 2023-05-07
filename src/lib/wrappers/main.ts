@@ -2,14 +2,9 @@ import { IModule } from 'angular';
 import * as React from 'react';
 import { angularizeDirective, WrapperOptions } from './angularizeDirective';
 
-export function angularize(
-  reactElement: React.ElementType,
-  {
-    name,
-    module,
-    ...options
-  }: WrapperOptions & { name: string; module: IModule }
-) {
+type AngularizeOptions = WrapperOptions & WrapperOptions & { name: string; module: IModule };
+
+export function angularize(reactElement: React.ElementType, { name, module, ...options }: AngularizeOptions) {
   angularizeDirective(reactElement, name, module, options);
   return module;
 }

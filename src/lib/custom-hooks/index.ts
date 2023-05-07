@@ -13,9 +13,6 @@ export const useService = ((...params: Parameters<typeof getService>) => {
  * @see NgTranslate for a better way to do this.
  */
 export function useTranslate() {
-  const $translate = useMemo(
-    () => getAngularService<translate.ITranslateService>('$translate'),
-    []
-  );
+  const $translate = useMemo(() => getAngularService<translate.ITranslateService>('$translate'), []);
   return (id: string, subs?: unknown) => $translate.instant(id, subs);
 }
