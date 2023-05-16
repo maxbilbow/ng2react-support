@@ -42,9 +42,6 @@ export function angularizeDirective<T extends FC>(
       scope.$scope = scope
       const root = ReactDOMClient.createRoot($element[0])
 
-      // First render - needed?
-      renderReact()
-
       scope.$on('$destroy', () => root.unmount())
 
       // Watch for any changes in bindings, then rerender
@@ -60,10 +57,7 @@ export function angularizeDirective<T extends FC>(
       })
 
       // TECH DEBT: comment out re-use of word "root". Looks like a bug
-      scope.$watchGroup(keys, (/* root */) => renderReact())
-      if (!onChangeHandlers) {
-        return
-      }
+      scope.$watchGroup(keys, () => renderReact())
 
       for (const [propName, callbackName] of onChangeHandlers) {
         logger.debug(`Adding onChange handler for ${propName as string} to ${callbackName}`)
@@ -73,6 +67,9 @@ export function angularizeDirective<T extends FC>(
           })
         }
       }
+
+      // First render - needed?
+      renderReact()
 
       function renderReact() {
         root.render(React.createElement(Component, scope))
