@@ -3,8 +3,8 @@ import React, { useMemo } from 'react'
 import { getAngularService } from '../ServiceProvider'
 
 type Props = {
-  id: string
-  substitutions?: unknown
+    id: string
+    substitutions?: unknown
 }
 
 /**
@@ -12,9 +12,9 @@ type Props = {
  * @returns
  */
 const NgTranslate = ({ id, substitutions }: Props) => {
-  const $translate = useMemo(() => getAngularService<translate.ITranslateService>('$translate'), [])
+    const $translate = useMemo(() => getAngularService<translate.ITranslateService>('$translate'), [])
 
-  return <>{$translate.instant(id, substitutions)}</>
+    return <>{$translate.instant(id, substitutions)}</>
 }
 
 export default NgTranslate
