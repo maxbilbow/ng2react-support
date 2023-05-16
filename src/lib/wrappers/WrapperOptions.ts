@@ -13,8 +13,8 @@ export type PropsCallbackName<T extends FC> = MethodNamesOf<FCProps<T>> & string
 type RequiredBindingType = '&' | '=' | '@' | '<'
 type OptionalBindingType = `?${RequiredBindingType}`
 export type BindingType = RequiredBindingType | OptionalBindingType
-export type OneWayBindingType = Exclude<BindingType, '=' | '?='>
-export type TwoWayBindingType = Extract<BindingType, '=' | '?='>
+export type TwoWayBindingType = '=' | '?='
+export type OneWayBindingType = Exclude<BindingType, TwoWayBindingType>
 
 export type TwoWayBindingTuple<T extends FC> = [TwoWayBindingType, PropsCallbackName<T>]
 type Bindings<T extends FC> = Partial<{
