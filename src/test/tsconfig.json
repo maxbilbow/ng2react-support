@@ -5,6 +5,6 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "include": ["**/*.ts", "helpers/*.cjs"],
+  "include": ["**/*.ts", "helpers/*.cjs", "**/*.tsx"],
   "references": [{ "path": "../lib" }]
 }

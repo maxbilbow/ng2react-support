@@ -1,29 +1,30 @@
-import type { IDirectiveLinkFn, IModule } from 'angular';
-import * as React from 'react';
-import * as ReactDOMClient from 'react-dom/client';
+import type { IDirectiveLinkFn, IModule, IScope } from 'angular'
+import * as React from 'react'
+import * as ReactDOMClient from 'react-dom/client'
+import { FC, FCProps, PropsCallbackName, WrapperOptions } from './WrapperOptions'
 
-export type WrapperOptions = {
-  bindings?: Record<string, string>;
-  require?: Record<string, string>;
-  // transclude?: boolean;
-  replace?: boolean;
-};
+type DirectiveOptions<T extends FC> = {
+  scopeBindings?: Record<string, string>
+  onChangeHandlers?: [keyof FCProps<T>, PropsCallbackName<T>][]
+  require?: WrapperOptions<T>['require']
+  replace?: boolean
+}
 
-const logger = console;
+const logger = console
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export function angularizeDirective(
-  Component: React.ElementType,
+export function angularizeDirective<T extends FC>(
+  Component: T,
   directiveName: string,
   angularApp: IModule,
-  options: WrapperOptions
+  options: DirectiveOptions<T>
 ) {
   if (typeof window === 'undefined' || typeof angularApp === 'undefined') {
-    return;
+    return
   }
-  const { bindings, require: requiredControllers, replace } = options;
+  const { scopeBindings = {}, require: requiredControllers = {}, replace = false, onChangeHandlers = [] } = options
   angularApp.directive(directiveName, () => ({
-    scope: bindings,
+    scope: scopeBindings,
     replace,
     require: requiredControllers,
     /**
@@ -33,42 +34,49 @@ export function angularizeDirective(
      * @param attrs
      * @param {{[key: string]: import("angular").IController}} [ctrl]
      */
-    link: function (this: IDirectiveLinkFn, scope, $element, attrs, ctrl) {
+    link: function (this: IDirectiveLinkFn, scope: IScope & Record<string, unknown>, $element, attrs, ctrl) {
       // Add $scope
-      Object.assign(scope, ctrl);
+      Object.assign(scope, ctrl)
 
       // Tech Debt: Why is $scope added here?
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (scope as any).$scope = scope;
-      const root = ReactDOMClient.createRoot($element[0]);
+      scope.$scope = scope
+      const root = ReactDOMClient.createRoot($element[0])
 
       // First render - needed?
-      renderReact();
+      renderReact()
 
-      scope.$on('$destroy', () => root.unmount());
-
-      if (!bindings) {
-        return;
-      }
+      scope.$on('$destroy', () => root.unmount())
 
       // Watch for any changes in bindings, then rerender
-      const keys = Object.keys(bindings).filter((bindingKey) => {
+      const keys = Object.keys(scopeBindings).filter((bindingKey) => {
         if (/^data[A-Z]/.test(bindingKey)) {
           logger.warn(
             // eslint-disable-next-line max-len
             `"${bindingKey}" binding for ${directiveName} directive will be undefined because AngularJS ignores attributes starting with data-`
-          );
-          return false;
+          )
+          return false
         }
-        return !bindings[bindingKey].includes('&');
-      });
+        return !scopeBindings[bindingKey].includes('&')
+      })
 
       // TECH DEBT: comment out re-use of word "root". Looks like a bug
-      scope.$watchGroup(keys, (/* root */) => renderReact());
+      scope.$watchGroup(keys, (/* root */) => renderReact())
+      if (!onChangeHandlers) {
+        return
+      }
+
+      for (const [propName, callbackName] of onChangeHandlers) {
+        logger.debug(`Adding onChange handler for ${propName as string} to ${callbackName}`)
+        scope[callbackName as string] = (newValue: unknown) => {
+          scope.$applyAsync(() => {
+            scope[propName as string] = newValue
+          })
+        }
+      }
 
       function renderReact() {
-        root.render(React.createElement(Component, scope));
+        root.render(React.createElement(Component, scope))
       }
     },
-  }));
+  }))
 }
