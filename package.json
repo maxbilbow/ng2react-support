@@ -1,6 +1,6 @@
 {
   "name": "@ng2react/support",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "Support functions for mixing AngularJS and React Components",
   "repository": {
     "type": "git",
