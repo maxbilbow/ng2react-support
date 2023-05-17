@@ -27,5 +27,8 @@ export type WrapperOptions<T extends FC> = {
     require?: Partial<{
         [key in keyof FCProps<T>]: string
     }>
-    replace?: boolean
+    /**
+     * @deprecated until we can figure out how to make this work
+     */
+    replace?: never
 }
