@@ -1,4 +1,5 @@
-export const MOCK_LOGGER = 'MOCK_LOGGER' as unknown
+export const MOCK_LOGGER = 'MOCK_LOGGER' as unknown,
+    MOCK_HTTP_SERVICE = 'MOCK_HTTP_SERVICE' as unknown
 
 function defaultTranslate() {
     return {
@@ -9,6 +10,7 @@ function defaultTranslate() {
 export function mockAngular(serviceMap: Record<string, any> = {}) {
     serviceMap.$translate ??= defaultTranslate()
     serviceMap.$log ??= { getLogger: () => MOCK_LOGGER }
+    serviceMap.$http ??= MOCK_HTTP_SERVICE
     window.angular = {
         element: () => ({
             injector: () => ({

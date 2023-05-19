@@ -30,5 +30,5 @@ export type WrapperOptions<T extends FC> = {
     /**
      * @deprecated until we can figure out how to make this work
      */
-    replace?: never
+    replace?: never //`<${string}></${string}>`
 }
