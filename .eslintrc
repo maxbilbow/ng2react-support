@@ -1,8 +1,8 @@
 {
-    "root": true,
-    "ignorePatterns": ["node_modules", "dist", ".*"],
-    "extends": ["eslint:recommended"],
-    "env": {
-        "node": true
-    }
+  "root": true,
+  "ignorePatterns": ["node_modules", "dist", ".*"],
+  "extends": ["eslint:recommended"],
+  "env": {
+    "node": true
+  }
 }
