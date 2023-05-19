@@ -37,5 +37,5 @@ export type WrapperOptions<T extends FC> = {
      * @deprecated This currently does not work (for now)
      *             so best you don't use it and just adjust you CSS for the additional component wrapper
      */
-    replace?: never
-};
+    replace?: never //`<${string}></${string}>`
+}

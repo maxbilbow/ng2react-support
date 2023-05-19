@@ -1,7 +1,7 @@
+import { afterAll, beforeAll, describe, it } from '@jest/globals'
 import * as assert from 'assert'
-import { describe, it, beforeAll, afterAll } from '@jest/globals'
 import { getService } from '../lib/ServiceProvider'
-import { MOCK_LOGGER, mockAngular, unMock } from './helpers/mocks'
+import { MOCK_HTTP_SERVICE, mockAngular, unMock } from './helpers/mocks'
 
 describe('Given angular is present', () => {
     beforeAll(() => mockAngular({ myService: true }))
@@ -21,6 +21,8 @@ describe('Given angular is present', () => {
 
     it('When getService is called for an angular service Then an error is thrown', () => {
         try {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore Because this is what we are testing
             getService('$http')
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore Because this is what we are testing
@@ -28,5 +30,9 @@ describe('Given angular is present', () => {
         } catch (e) {
             expect((e as Error).message).toContain('angular')
         }
+    })
+
+    it('When getService is called for an angular service with the allowUnsafeAngularService flag Then an error is not thrown', () => {
+        expect(getService('$http', { allowUnsafeAngularService: true })).toBe(MOCK_HTTP_SERVICE)
     })
 })
