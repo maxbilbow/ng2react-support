@@ -54,6 +54,26 @@ angularize(MyReactElement, {
   require: {
     myController: '^myController',
   },
-  replace: true,
+})
+```
+
+### 2-Way Bindings
+
+2-way bindings will not work automatically in react. To maintain this behaviour, you will have to
+manually call an update callback from within the React component and trigger the Angular digest cycle
+from the parent.
+
+`angularize` can handle this for you:
+
+```tsx
+const MyReactComponent = ({ myState, updateMyState }) => {
+  return <input onChange={(e) => updateMyState(e.target.value)} value={myState} />
+}
+
+angularize(MyReactElement, {
+  name: 'myAngularComponent',
+  bindings: {
+    myState: ['=', 'updateMyState'],
+  },
 })
 ```
