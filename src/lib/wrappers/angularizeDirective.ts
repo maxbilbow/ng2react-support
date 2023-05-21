@@ -35,7 +35,7 @@ export function angularizeDirective<T extends FC>(
      * @param {{[key: string]: import("angular").IController}} [ctrl]
      */
     link: function (this: IDirectiveLinkFn, scope: IScope & Record<string, unknown>, $element, attrs, ctrl) {
-      // Add $scope
+      // bind controllers to scope
       Object.assign(scope, ctrl)
 
       // Tech Debt: Why is $scope added here?
