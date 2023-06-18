@@ -2,7 +2,7 @@ import { IModule } from 'angular'
 import type { FunctionComponent } from 'react'
 
 export type FC<T = any> = FunctionComponent<T>
-export type FCProps<T extends FC> = Required<Parameters<T>['0']>
+export type FCProps<T extends FC> = T extends FC<infer TProps> ? TProps : Required<Parameters<T>['0']>
 
 type MethodNamesOf<T extends object> = {
   [K in keyof T]: T[K] extends (newValue: infer V) => void ? K : never

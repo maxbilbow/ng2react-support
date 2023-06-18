@@ -42,3 +42,16 @@ angularize(EmptyProps, {
   bindings: {},
   require: {},
 })
+
+const MyElement2: React.FunctionComponent<Props> = (props) => {
+  return <>{props}</>
+}
+
+angularize(MyElement, {
+  name: '',
+  bindings: {
+    value: ['=', 'onValueChange'],
+    value3: '<',
+    value5: '@',
+  },
+})
