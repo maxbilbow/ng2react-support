@@ -1,4 +1,4 @@
-import { IModule } from 'angular'
+import { IController, IModule } from 'angular'
 import type { FunctionComponent } from 'react'
 
 export type FC<T = any> = FunctionComponent<T>
@@ -22,8 +22,18 @@ type Bindings<T extends FC> = Partial<{
   [key in keyof FCProps<T>]: OneWayBindingType | TwoWayBindingTuple<T>
 }>
 
+/**
+ * Functions that return watchable values for a controller
+ */
+export type CtrlWatchFunction<T> = (ctrl: T) => () => unknown
+
+export type CtrlOptions<T> = {
+  name: string
+  watch: CtrlWatchFunction<T> | CtrlWatchFunction<T>[]
+}
+
 type RequireControllers<T extends FC> = Partial<{
-  [key in keyof FCProps<T>]: string
+  [key in keyof FCProps<T>]: string | CtrlOptions<unknown>
 }>
 
 type NoProps = undefined | Record<string, never>

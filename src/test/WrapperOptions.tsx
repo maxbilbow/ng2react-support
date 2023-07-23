@@ -27,6 +27,16 @@ angularize(MyElement, {
     value4: ['<', 'notAllowed'],
     value5: '@',
   },
+  require: {
+    value: {
+      name: 'myController',
+      watch: (ctrl: any) => ctrl.value,
+    },
+    value2: {
+      name: 'myController',
+      watch: [(ctrl: any) => ctrl.value, (ctrl: any) => ctrl.value2],
+    },
+  },
 })
 
 angularize(NoProps, {
