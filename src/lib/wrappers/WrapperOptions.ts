@@ -32,10 +32,9 @@ export type WrapperOptions<T extends FC> = {
   name: string
   module?: IModule
   bindings?: FCProps<T> extends NoProps ? never : Bindings<T>
-  require?: FCProps<T> extends NoProps ? never : RequireControllers<T>
   /**
-   * @deprecated This currently does not work (for now)
-   *             so best you don't use it and just adjust you CSS for the additional component wrapper
+   * @deprecated Injecting Angular controllers into react components creates state-management issues.
+   *             Recomended to pass data via props instead.
    */
-  replace?: never //`<${string}></${string}>`
+  require?: FCProps<T> extends NoProps ? never : RequireControllers<T>
 }

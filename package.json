@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
+    "@tsconfig/node-lts": "^18.12.5",
     "@tsconfig/node18": "^2.0.1",
     "@types/angular": "x",
     "@types/angular-translate": "x",
